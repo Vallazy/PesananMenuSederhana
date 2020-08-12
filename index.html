@@ -113,25 +113,29 @@
         if (this.dataset.type == 'donat') {
             editPrompt = window.prompt(`${donat} `, pesananDonat);
             editPrompt = parseInt(editPrompt);
-            if (editPrompt < 0) {
+            if (editPrompt < 0 || !parseInt(editPrompt)) {
                 window.alert('Angka yang Anda pilih tidak diperbolehkan');
-            } else {
+            } else if(editPrompt >= 0){
                 pesananDonat = editPrompt;
                 txtPesan1.textContent = pesananDonat;
+            } else {
+                editPrompt = pesananDonat;
+                txtPesan1.textContent = pesananDonat;
             }
-
+             
         } else {
             editPrompt = window.prompt(`${tehManis} `, pesananTehManis);
             editPrompt = parseInt(editPrompt);
-            if (editPrompt < 0) {
+            if (editPrompt < 0 || !parseInt(editPrompt)) {
                 window.alert('Angka yang Anda pilih tidak diperbolehkan');
-            } else {
+            } else if(editPrompt >= 0) {
                 pesananTehManis = editPrompt;
                 txtPesan2.textContent = pesananTehManis;
+            } else {
+                editPrompt = pesananDonat;
+                txtPesan2.textContent = pesananTehManis;
             }
-        }
-
-
+        } 
     }
 
     function totalBayar() {
