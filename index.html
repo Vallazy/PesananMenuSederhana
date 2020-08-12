@@ -110,10 +110,11 @@
 
     function edit() {
         let editPrompt;
+        
         if (this.dataset.type == 'donat') {
             editPrompt = window.prompt(`${donat} `, pesananDonat);
             editPrompt = parseInt(editPrompt);
-            if (editPrompt < 0 || !parseInt(editPrompt)) {
+            if (editPrompt < 0) {
                 window.alert('Angka yang Anda pilih tidak diperbolehkan');
             } else if(editPrompt >= 0){
                 pesananDonat = editPrompt;
@@ -126,7 +127,7 @@
         } else {
             editPrompt = window.prompt(`${tehManis} `, pesananTehManis);
             editPrompt = parseInt(editPrompt);
-            if (editPrompt < 0 || !parseInt(editPrompt)) {
+            if (editPrompt < 0) {
                 window.alert('Angka yang Anda pilih tidak diperbolehkan');
             } else if(editPrompt >= 0) {
                 pesananTehManis = editPrompt;
@@ -135,7 +136,9 @@
                 editPrompt = pesananDonat;
                 txtPesan2.textContent = pesananTehManis;
             }
-        } 
+
+        }
+        
     }
 
     function totalBayar() {
