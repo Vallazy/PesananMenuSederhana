@@ -1,0 +1,160 @@
+<meta name="viewport" content="width=device-width" />
+
+<style>
+    .container {
+        max-width: 500px;
+        margin: auto;
+    }
+</style>
+
+
+<div class="container">
+    <h3>Pilihan Menu</h3>
+    <p>Donat kacang : 5000</p>
+    <p>Teh Manis : 3000</p>
+    <form action="javascript:void(0)">
+        <label id="donat"></label>
+        <pre class="txt-pesanan1">0</pre>
+        <button class="btn-minus" data-type="donat"> - </button>
+        <button class="btn-plus" data-type="donat"> + </button>
+        <button class="btn-edit" data-type="donat">edit</button>
+
+        <br><br>
+
+        <label id="teh-manis"></label>
+        <pre class="txt-pesanan2">0</pre>
+        <button class="btn-minus" data-type="teh-manis"> - </button>
+        <button class="btn-plus" data-type="teh-manis"> + </button>
+        <button class="btn-edit" data-type="teh-manis">edit</button>
+
+        <br><br>
+
+        <input type="submit" id="total-Bayar" value="total harga">
+    </form>
+
+
+    <div>
+        Total Harga :
+        <pre id="txt-total">Belum ada pesanan.</pre>
+    </div>
+</div>
+
+
+<script>
+    let donat = document.querySelector("#donat").innerHTML = "donat kacang :";
+    let tehManis = document.querySelector("#teh-manis").innerHTML = "teh manis :";
+
+
+    let txtPesan1 = document.querySelector('.txt-pesanan1');
+    let txtPesan2 = document.querySelector('.txt-pesanan2');
+
+
+    let btnPlus = document.querySelectorAll('.btn-plus');
+    let btnMinus = document.querySelectorAll('.btn-minus');
+    let btnEdit = document.querySelectorAll('.btn-edit');
+    let btnSubmit = document.querySelector('#total-Bayar');
+
+    let txtTotal = document.querySelector('#txt-total');
+    let pesananTehManis = 0;
+    let pesananDonat = 0;
+
+    for (let btn of btnPlus) {
+        btn.addEventListener('click', plus);
+    }
+    for (let btn of btnMinus) {
+        btn.addEventListener('click', minus);
+    }
+    for (let btn of btnEdit) {
+        btn.addEventListener('click', edit);
+    }
+
+    btnSubmit.addEventListener('click', totalBayar);
+
+
+
+    function plus() {
+        if (this.dataset.type == 'donat') {
+            txtPesan1.textContent = "";
+            pesananDonat += 1;
+            txtPesan1.textContent += pesananDonat;
+        } else {
+            txtPesan2.textContent = "";
+            pesananTehManis += 1;
+            txtPesan2.textContent += pesananTehManis;
+        }
+
+    }
+
+    function minus() {
+        if (this.dataset.type == 'donat') {
+
+            if (pesananDonat == 0 && txtPesan1.textContent == "0") {
+                pesananDonat = 0;
+            } else {
+                txtPesan1.textContent = "";
+                pesananDonat -= 1;
+                txtPesan1.textContent += pesananDonat;
+            }
+        } else {
+            if (pesananTehManis == 0 && txtPesan2.textContent == "0") {
+                pesananTehManis = 0;
+            } else {
+                txtPesan2.textContent = "";
+                pesananTehManis -= 1;
+                txtPesan2.textContent += pesananTehManis;
+            }
+        }
+    }
+
+    function edit() {
+        let editPrompt;
+        if (this.dataset.type == 'donat') {
+            editPrompt = window.prompt(`${donat} `, pesananDonat);
+            editPrompt = parseInt(editPrompt);
+            if (editPrompt < 0) {
+                window.alert('Angka yang Anda pilih tidak diperbolehkan');
+            } else {
+                pesananDonat = editPrompt;
+                txtPesan1.textContent = pesananDonat;
+            }
+
+        } else {
+            editPrompt = window.prompt(`${tehManis} `, pesananTehManis);
+            editPrompt = parseInt(editPrompt);
+            if (editPrompt < 0) {
+                window.alert('Angka yang Anda pilih tidak diperbolehkan');
+            } else {
+                pesananTehManis = editPrompt;
+                txtPesan2.textContent = pesananTehManis;
+            }
+
+        }
+
+
+    }
+
+    function totalBayar() {
+        let hargaDonat = 5000;
+        let hargaTehManis = 3000;
+        txtTotal.textContent = "";
+
+        if (pesananDonat > 0 && pesananTehManis > 0) {
+
+            let total = (pesananDonat * hargaDonat) + (pesananTehManis * hargaTehManis);
+            txtTotal.textContent = `Rp.${total},00 `;
+        } else if (pesananDonat > 0 && pesananTehManis == 0) {
+
+            let total = pesananDonat * hargaDonat;
+            txtTotal.textContent = `Rp.${total},00 `;
+        } else if (pesananDonat == 0 && pesananTehManis > 0) {
+
+            let total = pesananTehManis * hargaTehManis;
+            txtTotal.textContent = `Rp.${total},00 `;
+        } else {
+            txtTotal.textContent = "";
+            let total = 0;
+            txtTotal.textContent = `Silahkan Memesan anda belum memesan apa - apa`;
+        }
+
+    }
+</script>
