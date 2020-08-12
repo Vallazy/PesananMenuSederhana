@@ -144,23 +144,23 @@
     function totalBayar() {
         const hargaDonat = 5000;
         const hargaTehManis = 3000;
+        let total;
         txtTotal.textContent = "";
-
         if (pesananDonat > 0 && pesananTehManis > 0) {
 
-            let total = (pesananDonat * hargaDonat) + (pesananTehManis * hargaTehManis);
+            total = (pesananDonat * hargaDonat) + (pesananTehManis * hargaTehManis);
             txtTotal.textContent = `Rp.${total},00 `;
         } else if (pesananDonat > 0 && pesananTehManis == 0) {
 
-            let total = pesananDonat * hargaDonat;
+            total = pesananDonat * hargaDonat;
             txtTotal.textContent = `Rp.${total},00 `;
         } else if (pesananDonat == 0 && pesananTehManis > 0) {
 
-            let total = pesananTehManis * hargaTehManis;
+            total = pesananTehManis * hargaTehManis;
             txtTotal.textContent = `Rp.${total},00 `;
         } else {
             txtTotal.textContent = "";
-            let total = 0;
+            total = 0;
             txtTotal.textContent = `Silahkan Memesan anda belum memesan apa - apa`;
         }
 
