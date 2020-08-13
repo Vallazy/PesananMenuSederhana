@@ -113,6 +113,9 @@
         
         if (this.dataset.type == 'donat') {
             editPrompt = window.prompt(`${donat} `, pesananDonat);
+            if (isNaN(editPrompt)) {
+                window.alert('Anda Bukan Memasukan Angka');
+            }
             editPrompt = parseInt(editPrompt);
             if (editPrompt < 0) {
                 window.alert('Angka yang Anda pilih tidak diperbolehkan');
@@ -126,6 +129,9 @@
              
         } else {
             editPrompt = window.prompt(`${tehManis} `, pesananTehManis);
+            if (isNaN(editPrompt)) {
+                window.alert('Anda Bukan Memasukan Angka');
+            }
             editPrompt = parseInt(editPrompt);
             if (editPrompt < 0) {
                 window.alert('Angka yang Anda pilih tidak diperbolehkan');
