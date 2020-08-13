@@ -10,8 +10,8 @@
 
 <div class="container">
     <h3>Pilihan Menu</h3>
-    <p>Donat kacang : 5000</p>
-    <p>Teh Manis : 3000</p>
+    <p>Donat kacang : Rp 5.000,00</p>
+    <p>Teh Manis : Rp 2.000,00</p>
     <form action="javascript:void(0)">
         <label id="donat"></label>
         <pre class="txt-pesanan1">0</pre>
@@ -108,7 +108,7 @@
         }
     }
 
-    function edit() {
+    function edit(){
         let editPrompt;
         
         if (this.dataset.type == 'donat') {
@@ -149,21 +149,23 @@
 
     function totalBayar() {
         const hargaDonat = 5000;
-        const hargaTehManis = 3000;
+        const hargaTehManis = 2000;
         let total;
         txtTotal.textContent = "";
+
         if (pesananDonat > 0 && pesananTehManis > 0) {
 
             total = (pesananDonat * hargaDonat) + (pesananTehManis * hargaTehManis);
-            txtTotal.textContent = `Rp.${total},00 `;
+            
+            txtTotal.textContent = `${_(total)} `;
         } else if (pesananDonat > 0 && pesananTehManis == 0) {
 
             total = pesananDonat * hargaDonat;
-            txtTotal.textContent = `Rp.${total},00 `;
+            txtTotal.textContent = `${_(total)} `;
         } else if (pesananDonat == 0 && pesananTehManis > 0) {
 
             total = pesananTehManis * hargaTehManis;
-            txtTotal.textContent = `Rp.${total},00 `;
+            txtTotal.textContent = `${_(total)} `;
         } else {
             txtTotal.textContent = "";
             total = 0;
@@ -171,4 +173,9 @@
         }
 
     }
+    const _ = data => new Intl.NumberFormat('ID', {
+        style: 'currency', 
+        currency: 'IDR' 
+    }).format(data);
+
 </script>
