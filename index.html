@@ -1,170 +1,161 @@
 <meta name="viewport" content="width=device-width" />
 
 <style>
-    .container {
-        max-width: 500px;
-        margin: auto;
-    }
+  .container {
+    max-width: 500px;
+    margin: auto;
+  }
 </style>
 
-
 <div class="container">
-    <h3>Pilihan Menu</h3>
-    <p>Donat kacang : Rp 5.000,00</p>
-    <p>Teh Manis : Rp 2.000,00</p>
-    <form action="javascript:void(0)">
-        <label id="donat"></label>
-        <pre class="txt-pesanan1">0</pre>
-        <button class="btn-minus" data-type="donat"> - </button>
-        <button class="btn-plus" data-type="donat"> + </button>
-        <button class="btn-edit" data-type="donat">edit</button>
+  <h3>Pilihan Menu</h3>
+  <p>Donat kacang : Rp 5.000,00</p>
+  <p>Teh Manis : Rp 2.000,00</p>
+  <form action="javascript:void(0)">
+    <label id="donat">Donat Kacang :</label>
+    <pre class="txt-pesanan1">0</pre>
+    <button class="btn-minus" data-type="donat">-</button>
+    <button class="btn-plus" data-type="donat">+</button>
+    <button class="btn-edit" data-type="donat">edit</button>
 
-        <br><br>
+    <br /><br />
 
-        <label id="teh-manis"></label>
-        <pre class="txt-pesanan2">0</pre>
-        <button class="btn-minus" data-type="teh-manis"> - </button>
-        <button class="btn-plus" data-type="teh-manis"> + </button>
-        <button class="btn-edit" data-type="teh-manis">edit</button>
+    <label id="teh-manis">Teh manis :</label>
+    <pre class="txt-pesanan2">0</pre>
+    <button class="btn-minus">-</button>
+    <button class="btn-plus">+</button>
+    <button class="btn-edit">edit</button>
 
-        <br><br>
+    <br /><br />
 
-        <input type="submit" id="total-Bayar" value="total harga">
-    </form>
+    <input type="submit" id="total-Bayar" value="total harga" />
+  </form>
 
-
-    <div>
-        Total Harga :
-        <pre id="txt-total">Belum ada pesanan.</pre>
-    </div>
-    <p>Kasir : Rayval Gumilar</p>
-    
+  <div>
+    Total Harga :
+    <pre id="txt-total">Belum ada pesanan.</pre>
+  </div>
+  <p>Kasir : Rayval Gumilar</p>
 </div>
 
-
 <script>
-    let donat = document.querySelector("#donat").innerHTML = "donat kacang :";
-    let tehManis = document.querySelector("#teh-manis").innerHTML = "teh manis :";
+  let donat = document.querySelector("#donat");
+  let tehManis = document.querySelector("#teh-manis");
 
+  let txtPesan1 = document.querySelector(".txt-pesanan1");
+  let txtPesan2 = document.querySelector(".txt-pesanan2");
 
-    let txtPesan1 = document.querySelector('.txt-pesanan1');
-    let txtPesan2 = document.querySelector('.txt-pesanan2');
+  let btnPlus = document.querySelectorAll(".btn-plus");
+  let btnMinus = document.querySelectorAll(".btn-minus");
+  let btnEdit = document.querySelectorAll(".btn-edit");
+  let btnSubmit = document.querySelector("#total-Bayar"); // hapus jika ingin realtime penambahan
 
+  let txtTotal = document.querySelector("#txt-total");
+  let pesananTehManis = 0;
+  let pesananDonat = 0;
 
-    let btnPlus = document.querySelectorAll('.btn-plus');
-    let btnMinus = document.querySelectorAll('.btn-minus');
-    let btnEdit = document.querySelectorAll('.btn-edit');
-    let btnSubmit = document.querySelector('#total-Bayar');
+  const menuPrompt = {
+    donat_: (donat = "custom jumlah donat kacang :"),
+    tehManis_: (tehManis = "custom jumlah teh manis :"),
+  };
 
-    let txtTotal = document.querySelector('#txt-total');
-    let pesananTehManis = 0;
-    let pesananDonat = 0;
+  for (let btn of btnPlus) {
+    btn.addEventListener("click", plus);
+  }
+  for (let btn of btnMinus) {
+    btn.addEventListener("click", minus);
+  }
+  for (let btn of btnEdit) {
+    btn.addEventListener("click", edit);
+  }
 
-    for (let btn of btnPlus) {
-        btn.addEventListener('click', plus);
+  btnSubmit.addEventListener("click", totalBayar);
+
+  function plus() {
+    if (this.dataset.type == "donat") {
+      txtPesan1.textContent = "";
+      pesananDonat += 1;
+      txtPesan1.textContent += pesananDonat;
+    } else {
+      txtPesan2.textContent = "";
+      pesananTehManis += 1;
+      txtPesan2.textContent += pesananTehManis;
     }
-    for (let btn of btnMinus) {
-        btn.addEventListener('click', minus);
+  }
+
+  function minus() {
+    if (this.dataset.type == "donat") {
+      if (pesananDonat == 0 && txtPesan1.textContent == "0") {
+        pesananDonat = 0;
+      } else {
+        txtPesan1.textContent = "";
+        pesananDonat -= 1;
+        txtPesan1.textContent += pesananDonat;
+      }
+    } else {
+      if (pesananTehManis == 0 && txtPesan2.textContent == "0") {
+        pesananTehManis = 0;
+      } else {
+        txtPesan2.textContent = "";
+        pesananTehManis -= 1;
+        txtPesan2.textContent += pesananTehManis;
+      }
     }
-    for (let btn of btnEdit) {
-        btn.addEventListener('click', edit);
+  }
+
+  function edit() {
+    let editPrompt;
+
+    if (this.dataset.type == "donat") {
+      editPrompt = window.prompt(menuPrompt.donat_, pesananDonat);
+      if (isNaN(editPrompt)) {
+        window.alert("Anda Bukan Memasukan Angka");
+      }
+      editPrompt = parseInt(editPrompt);
+      if (editPrompt < 0) {
+        window.alert("Angka yang Anda pilih tidak diperbolehkan");
+      } else if (editPrompt >= 0) {
+        pesananDonat = editPrompt;
+        txtPesan1.textContent = pesananDonat;
+      } else {
+        editPrompt = pesananDonat;
+        txtPesan1.textContent = pesananDonat;
+      }
+    } else {
+      editPrompt = window.prompt(menuPrompt.tehManis_, pesananTehManis);
+      if (isNaN(editPrompt)) {
+        window.alert("Anda Bukan Memasukan Angka");
+      }
+      editPrompt = parseInt(editPrompt);
+      if (editPrompt < 0) {
+        window.alert("Angka yang Anda pilih tidak diperbolehkan");
+      } else if (editPrompt >= 0) {
+        pesananTehManis = editPrompt;
+        txtPesan2.textContent = pesananTehManis;
+      } else {
+        editPrompt = pesananDonat;
+        txtPesan2.textContent = pesananTehManis;
+      }
     }
+  }
 
-    btnSubmit.addEventListener('click', totalBayar);
+  function totalBayar() {
+    const hargaDonat = 5000;
+    const hargaTehManis = 2000;
+    let total;
+    txtTotal.textContent = "";
+    if (pesananDonat == 0 && pesananTehManis == 0) {
+      total = 0;
+      txtTotal.textContent = `Silahkan Memesan anda belum memesan apa - apa`;
+    } else {
+      total = pesananDonat * hargaDonat + pesananTehManis * hargaTehManis;
 
-
-
-    function plus() {
-        if (this.dataset.type == 'donat') {
-            txtPesan1.textContent = "";
-            pesananDonat += 1;
-            txtPesan1.textContent += pesananDonat;
-        } else {
-            txtPesan2.textContent = "";
-            pesananTehManis += 1;
-            txtPesan2.textContent += pesananTehManis;
-        }
-
+      txtTotal.textContent = `${idr(total)} `;
     }
-
-    function minus() {
-        if (this.dataset.type == 'donat') {
-
-            if (pesananDonat == 0 && txtPesan1.textContent == "0") {
-                pesananDonat = 0;
-            } else {
-                txtPesan1.textContent = "";
-                pesananDonat -= 1;
-                txtPesan1.textContent += pesananDonat;
-            }
-        } else {
-            if (pesananTehManis == 0 && txtPesan2.textContent == "0") {
-                pesananTehManis = 0;
-            } else {
-                txtPesan2.textContent = "";
-                pesananTehManis -= 1;
-                txtPesan2.textContent += pesananTehManis;
-            }
-        }
-    }
-
-    function edit(){
-        let editPrompt;
-        
-        if (this.dataset.type == 'donat') {
-            editPrompt = window.prompt(`${donat} `, pesananDonat);
-            if (isNaN(editPrompt)) {
-                window.alert('Anda Bukan Memasukan Angka');
-            }
-            editPrompt = parseInt(editPrompt);
-            if (editPrompt < 0) {
-                window.alert('Angka yang Anda pilih tidak diperbolehkan');
-            } else if(editPrompt >= 0){
-                pesananDonat = editPrompt;
-                txtPesan1.textContent = pesananDonat;
-            } else {
-                editPrompt = pesananDonat;
-                txtPesan1.textContent = pesananDonat;
-            }
-             
-        } else {
-            editPrompt = window.prompt(`${tehManis} `, pesananTehManis);
-            if (isNaN(editPrompt)) {
-                window.alert('Anda Bukan Memasukan Angka');
-            }
-            editPrompt = parseInt(editPrompt);
-            if (editPrompt < 0) {
-                window.alert('Angka yang Anda pilih tidak diperbolehkan');
-            } else if(editPrompt >= 0) {
-                pesananTehManis = editPrompt;
-                txtPesan2.textContent = pesananTehManis;
-            } else {
-                editPrompt = pesananDonat;
-                txtPesan2.textContent = pesananTehManis;
-            }
-
-        }
-        
-    }
-
-    function totalBayar() {
-        const hargaDonat = 5000;
-        const hargaTehManis = 2000;
-        let total;
-        txtTotal.textContent = "";
-
-        if (pesananDonat >= 0 && pesananTehManis >= 0) {
-            total = (pesananDonat * hargaDonat) + (pesananTehManis * hargaTehManis);
-            txtTotal.textContent = `${_(total)} `;
-        } else {
-            total = 0;
-            txtTotal.textContent = `Silahkan Memesan anda belum memesan apa - apa`;
-        }
-
-    }
-    const _ = data => new Intl.NumberFormat('ID', {
-        style: 'currency', 
-        currency: 'IDR' 
+  }
+  const idr = (data) =>
+    new Intl.NumberFormat("ID", {
+      style: "currency",
+      currency: "IDR",
     }).format(data);
-
 </script>
