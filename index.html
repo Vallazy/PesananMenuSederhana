@@ -13,7 +13,7 @@
   <p>Teh Manis : Rp 2.000,00</p>
   <form action="javascript:void(0)">
     <label id="donat">Donat Kacang :</label>
-    <pre class="txt-pesanan1">0</pre>
+    <span class="txt-pesanan1">0</span>
     <button class="btn-minus" data-type="donat">-</button>
     <button class="btn-plus" data-type="donat">+</button>
     <button class="btn-edit" data-type="donat">edit</button>
@@ -21,7 +21,7 @@
     <br /><br />
 
     <label id="teh-manis">Teh manis :</label>
-    <pre class="txt-pesanan2">0</pre>
+    <span class="txt-pesanan2">0</span>
     <button class="btn-minus">-</button>
     <button class="btn-plus">+</button>
     <button class="btn-edit">edit</button>
@@ -33,7 +33,7 @@
 
   <div>
     Total Harga :
-    <pre id="txt-total">Belum ada pesanan.</pre>
+    <span id="txt-total">Belum ada pesanan.</span>
   </div>
   <p>Kasir : Rayval Gumilar</p>
 </div>
@@ -48,7 +48,7 @@
   let btnPlus = document.querySelectorAll(".btn-plus");
   let btnMinus = document.querySelectorAll(".btn-minus");
   let btnEdit = document.querySelectorAll(".btn-edit");
-  let btnSubmit = document.querySelector("#total-Bayar"); // hapus jika ingin realtime penambahan
+  let btnSubmit = document.querySelector("#total-Bayar"); 
 
   let txtTotal = document.querySelector("#txt-total");
   let pesananTehManis = 0;
