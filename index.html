@@ -153,21 +153,10 @@
         let total;
         txtTotal.textContent = "";
 
-        if (pesananDonat > 0 && pesananTehManis > 0) {
-
+        if (pesananDonat >= 0 && pesananTehManis >= 0) {
             total = (pesananDonat * hargaDonat) + (pesananTehManis * hargaTehManis);
-            
-            txtTotal.textContent = `${_(total)} `;
-        } else if (pesananDonat > 0 && pesananTehManis == 0) {
-
-            total = pesananDonat * hargaDonat;
-            txtTotal.textContent = `${_(total)} `;
-        } else if (pesananDonat == 0 && pesananTehManis > 0) {
-
-            total = pesananTehManis * hargaTehManis;
             txtTotal.textContent = `${_(total)} `;
         } else {
-            txtTotal.textContent = "";
             total = 0;
             txtTotal.textContent = `Silahkan Memesan anda belum memesan apa - apa`;
         }
