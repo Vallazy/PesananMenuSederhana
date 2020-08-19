@@ -12,7 +12,7 @@
   <p>Donat kacang : Rp 5.000,00</p>
   <p>Teh Manis : Rp 2.000,00</p>
   <form action="javascript:void(0)">
-    <label id="donat">Donat Kacang :</label>
+    <label>Donat Kacang :</label>
     <span class="txt-pesanan1">0</span>
     <button class="btn-minus" data-type="donat">-</button>
     <button class="btn-plus" data-type="donat">+</button>
@@ -20,7 +20,7 @@
 
     <br /><br />
 
-    <label id="teh-manis">Teh manis :</label>
+    <label>Teh manis :</label>
     <span class="txt-pesanan2">0</span>
     <button class="btn-minus">-</button>
     <button class="btn-plus">+</button>
@@ -34,42 +34,42 @@
   <div>
     <span id="txt-total">Belum ada pesanan.</span>
   </div>
+  <hr />
   <span>Kasir : Rayval Gumilar</span>
 </div>
 
 <script>
-  let donat = document.querySelector("#donat");
-  let tehManis = document.querySelector("#teh-manis");
-
   let txtPesan1 = document.querySelector(".txt-pesanan1");
   let txtPesan2 = document.querySelector(".txt-pesanan2");
-
-  let btnPlus = document.querySelectorAll(".btn-plus");
-  let btnMinus = document.querySelectorAll(".btn-minus");
-  let btnEdit = document.querySelectorAll(".btn-edit");
-  let btnSubmit = document.querySelector("#total-Bayar"); 
-
   let txtTotal = document.querySelector("#txt-total");
+
   let pesananTehManis = 0;
   let pesananDonat = 0;
 
-  const menuPrompt = {
-    donat_: (donat = "custom jumlah donat kacang :"),
-    tehManis_: (tehManis = "custom jumlah teh manis :"),
-  };
+  const $ = [
+    {
+      btnPlus: document.querySelectorAll(".btn-plus"),
+      btnMinus: document.querySelectorAll(".btn-minus"),
+      btnEdit: document.querySelectorAll(".btn-edit"),
+      btnSubmit: document.querySelector("#total-Bayar"),
+    },
+    {
+      donat: "custom jumlah donat kacang :",
+      tehManis: "custom jumlah teh manis :",
+    },
+  ];
 
-  for (let btn of btnPlus) {
+  for (let btn of $[0].btnPlus) {
     btn.addEventListener("click", plus);
   }
-  for (let btn of btnMinus) {
+  for (let btn of $[0].btnMinus) {
     btn.addEventListener("click", minus);
   }
-  for (let btn of btnEdit) {
+  for (let btn of $[0].btnEdit) {
     btn.addEventListener("click", edit);
   }
-  
 
-  btnSubmit.addEventListener("click", totalBayar);
+  $[0].btnSubmit.addEventListener("click", totalBayar);
 
   function plus() {
     if (this.dataset.type == "donat") {
@@ -107,7 +107,7 @@
     let editPrompt;
 
     if (this.dataset.type == "donat") {
-      editPrompt = window.prompt(menuPrompt.donat_, pesananDonat);
+      editPrompt = window.prompt($[1].donat, pesananDonat);
       if (isNaN(editPrompt)) {
         window.alert("Anda Bukan Memasukan Angka");
       }
@@ -122,7 +122,7 @@
         txtPesan1.textContent = pesananDonat;
       }
     } else {
-      editPrompt = window.prompt(menuPrompt.tehManis_, pesananTehManis);
+      editPrompt = window.prompt($[1].tehManis, pesananTehManis);
       if (isNaN(editPrompt)) {
         window.alert("Anda Bukan Memasukan Angka");
       }
@@ -158,5 +158,4 @@
       style: "currency",
       currency: "IDR",
     }).format(data);
-
 </script>
